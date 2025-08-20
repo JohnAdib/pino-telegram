@@ -1,0 +1,53 @@
+{
+  "name": "pino-telegram",
+  "version": "1.6.0",
+  "description": "Free logging solution with beautiful formatting - Unlimited real-time logs through Telegram. Perfect Pino transport for any scale!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "keywords": [
+    "pino",
+    "logging",
+    "telegram",
+    "transport",
+    "bot",
+    "notification"
+  ],
+  "author": {
+    "name": "John Adib",
+    "url": "https://MrAdib.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnAdib/pino-telegram.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/JohnAdib/pino-telegram/issues"
+  },
+  "homepage": "https://github.com/JohnAdib/pino-telegram#readme",
+  "peerDependencies": {
+    "pino": ">=6.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ]
+}
