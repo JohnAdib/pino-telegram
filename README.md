@@ -110,8 +110,7 @@ After running the code above, you'll receive formatted messages in your Telegram
 
 **📱 Telegram Message 1:**
 ```
-[INFO]
-🚀 Application started successfully!
+[INFO] 🚀 Application started successfully!
 ```
 
 </td>
@@ -119,8 +118,7 @@ After running the code above, you'll receive formatted messages in your Telegram
 
 **📱 Telegram Message 2:**
 ```
-[WARN]
-⚠️ High memory usage detected
+[WARN] ⚠️ High memory usage detected
 ```
 
 </td>
@@ -130,8 +128,7 @@ After running the code above, you'll receive formatted messages in your Telegram
 
 **📱 Telegram Message 3:**
 ```
-[ERROR]
-💥 Database connection failed
+[ERROR] 💥 Database connection failed
 
 - error: <code>Connection timeout</code>
 - retries: <code>3</code>
@@ -477,17 +474,23 @@ logger.fatal('💀 Fatal');            // ✅ Sent
 
 #### **Enable Timestamps (Optional)**
 ```javascript
-// includeTimestamp: true - adds timestamps to messages
+// includeTimestamp: true - adds timestamps at the end of messages
 const logger = pino({
   transport: {
     target: 'pino-telegram',
     options: {
       botToken: process.env.TELEGRAM_BOT_TOKEN,
       chatId: process.env.CHAT_ID,
-      includeTimestamp: true  // Shows: [INFO] 2024-12-19T10:30:45.123Z
+      includeTimestamp: true  // Shows: [INFO] Message content\n2024-12-19T10:30:45.123Z
     }
   }
 });
+```
+
+**Example with timestamp:**
+```
+[INFO] 🚀 Application started successfully!
+2024-12-19T10:30:45.123Z
 ```
 
 ---

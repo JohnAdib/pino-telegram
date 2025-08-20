@@ -1,6 +1,6 @@
 {
   "name": "pino-telegram",
-  "version": "1.6.0",
+  "version": "2.1.0",
   "description": "Free logging solution with beautiful formatting - Unlimited real-time logs through Telegram. Perfect Pino transport for any scale!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,9 +34,6 @@
   "homepage": "https://github.com/JohnAdib/pino-telegram#readme",
   "peerDependencies": {
     "pino": ">=6.0.0"
-  },
-  "dependencies": {
-    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",

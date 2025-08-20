@@ -61,9 +61,7 @@ export async function sendToTelegram(options: ISendToTelegramOptions): Promise<v
   };
 
   try {
-    // Dynamic import for better tree-shaking and compatibility
-    const { default: fetch } = await import('node-fetch');
-    
+    // Use Node.js built-in fetch (available since Node.js 18.0.0)
     const response = await fetch(url, {
       method: 'POST',
       headers: {

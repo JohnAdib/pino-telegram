@@ -23,7 +23,7 @@ export interface IFormatMessageOptions {
  * ```typescript
  * const log = { level: 50, msg: "Database error", time: Date.now() };
  * const message = formatMessage(log, { includeTimestamp: true });
- * // Returns: "<b>[ERROR]</b> 2024-01-01T12:00:00.000Z\nDatabase error"
+ * // Returns: "<b>[ERROR]</b> Database error\n2024-01-01T12:00:00.000Z"
  * ```
  * 
  * @public
@@ -32,14 +32,14 @@ export function formatMessage(log: ILogEntry, options: IFormatMessageOptions = {
   const level = getLevelName(log.level ?? DEFAULT_LOG_LEVEL_VALUE);
   const message = log.msg ?? 'No message';
   
-  let formatted = `<b>[${level.toUpperCase()}]</b>`;
+  // Format: [TYPE] message content
+  let formatted = `<b>[${level.toUpperCase()}]</b> ${message}`;
   
+  // Add timestamp at the end if enabled
   if (options.includeTimestamp) {
     const timestamp = new Date(log.time ?? Date.now()).toISOString();
-    formatted += ` ${timestamp}`;
+    formatted += `\n${timestamp}`;
   }
-  
-  formatted += `\n${message}`;
   
   // Add error details if present
   if (log.err) {
