@@ -65,7 +65,8 @@ export function shouldSendLog(options: IShouldSendLogOptions): boolean {
   // 2. Use traditional min level filtering if minLevelName is provided
   let shouldIncludeByLevel = true;
   if (minLevelName) {
-    const minLevel = LOG_LEVELS[minLevelName] ?? DEFAULT_LOG_LEVEL_VALUE;
+    const minLevelValue = LOG_LEVELS[minLevelName];
+    const minLevel = minLevelValue ?? DEFAULT_LOG_LEVEL_VALUE;
     shouldIncludeByLevel = logLevel >= minLevel;
   }
   

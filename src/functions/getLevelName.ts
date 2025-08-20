@@ -10,7 +10,7 @@ import { DEFAULT_LEVEL } from '../constants/DEFAULT_LEVEL';
  * @example
  * ```typescript
  * const levelName = getLevelName(50); // "error"
- * const unknown = getLevelName(999); // "info" (fallback)
+ * const unknown = getLevelName(999); // "trace" (fallback)
  * ```
  * 
  * @public
