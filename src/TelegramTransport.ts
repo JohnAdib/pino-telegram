@@ -4,10 +4,12 @@ import { ILogEntry } from './types/ILogEntry';
 import { DEFAULT_LEVEL } from './constants/DEFAULT_LEVEL';
 import { DEFAULT_PARSE_MODE } from './constants/DEFAULT_PARSE_MODE';
 import { DEFAULT_API_URL } from './constants/DEFAULT_API_URL';
+
 import { parseLog } from './functions/parseLog';
 import { shouldSendLog } from './functions/shouldSendLog';
 import { sendToTelegram } from './functions/sendToTelegram';
 import { TelegramTransportError } from './errors/TelegramTransportError';
+import { getLevelName } from './functions/getLevelName';
 
 /**
  * A Pino transport for sending logs to Telegram via Bot API
@@ -41,6 +43,7 @@ export class TelegramTransport extends Writable {
   private readonly excludeLevels?: LogLevel[];
   private readonly parseMode: string;
   private readonly includeTimestamp: boolean;
+  private readonly threadIds?: Record<string, number>;
 
   /**
    * Creates a new Telegram transport instance
@@ -67,6 +70,9 @@ export class TelegramTransport extends Writable {
     this.excludeLevels = options.excludeLevels;
     this.parseMode = options.parseMode || DEFAULT_PARSE_MODE;
     this.includeTimestamp = options.includeTimestamp ?? false;
+    
+    // Store thread IDs only if provided by user
+    this.threadIds = options.threadIds;
   }
 
   /**
@@ -96,14 +102,25 @@ export class TelegramTransport extends Writable {
         return;
       }
       
-      sendToTelegram({
+      // Get the level name and corresponding thread ID (only if user provided threadIds)
+      const levelName = log.level !== undefined ? getLevelName(log.level) : undefined;
+      const messageThreadId = levelName && this.threadIds && this.threadIds[levelName] !== undefined ? this.threadIds[levelName] : undefined;
+      
+      const sendOptions: any = {
         log,
         botToken: this.botToken,
         chatId: this.chatId,
         parseMode: this.parseMode,
         apiUrl: this.apiUrl,
         includeTimestamp: this.includeTimestamp
-      })
+      };
+      
+      // Only add messageThreadId if it's defined
+      if (messageThreadId !== undefined) {
+        sendOptions.messageThreadId = messageThreadId;
+      }
+      
+      sendToTelegram(sendOptions)
         .then(() => callback())
         .catch(error => {
           // Don't fail the logging pipeline, just emit error for monitoring

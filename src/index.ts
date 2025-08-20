@@ -40,7 +40,8 @@ export {
   DEFAULT_LOG_LEVEL_VALUE,
   DEFAULT_PARSE_MODE, 
   DEFAULT_API_URL,
-  MESSAGE_LENGTH_LIMIT
+  MESSAGE_LENGTH_LIMIT,
+  ThreadIdMapping
 } from './constants';
 
 // === DEFAULT EXPORT ===

@@ -341,6 +341,43 @@ function processPayment(amount, userId) {
 | `parseMode` | `ParseMode` | `'HTML'` | Message format: `HTML`, `Markdown`, `MarkdownV2` |
 | `includeTimestamp` | `boolean` | `false` | Include timestamp in messages (Telegram shows message time by default) |
 | `apiUrl` | `string` | `'https://api.telegram.org'` | Telegram API URL (for custom instances) |
+| `threadIds` | `ThreadIdMapping` | `undefined` | Message thread IDs for organizing logs into separate forum threads |
+
+### 🧵 Message Thread IDs (Forum Organization)
+
+Telegram supports **forum topics** and **message threads** that allow you to organize logs by level within a single chat. This feature is **optional** - thread IDs are only used when you explicitly provide them:
+
+```javascript
+const logger = pino({
+  transport: {
+    target: 'pino-telegram',
+    options: {
+      botToken: process.env.TELEGRAM_BOT_TOKEN,
+      chatId: process.env.LOGS_CHAT_ID,
+      // OPTIONAL: Only specify threadIds if you want forum organization
+      threadIds: {
+        info: 123,    // Thread ID 123 for info logs
+        warn: 456,    // Thread ID 456 for warning logs
+        error: 789,   // Thread ID 789 for error logs
+        fatal: 999    // Thread ID 999 for fatal logs
+        // Only specify the levels you want to organize
+      }
+    }
+  }
+});
+```
+
+**Benefits:**
+- ✅ **Optional Feature** - Only used when you explicitly configure it
+- ✅ **Single Chat** - All logs in one place, easy to monitor
+- ✅ **Organized by Level** - Each specified log level gets its own thread
+- ✅ **Forum Structure** - Perfect for team discussions and context
+- ✅ **Flexible** - Choose which levels to organize and their thread IDs
+
+**Important Notes:**
+- **No defaults** - Thread IDs are only used when you provide them
+- **Partial mapping** - You can specify thread IDs for only some log levels
+- **Custom IDs** - Use any thread ID numbers that match your Telegram forum setup
 
 ### 🎯 Advanced Log Filtering
 

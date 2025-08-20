@@ -21,6 +21,15 @@ export interface ISendToTelegramOptions {
   apiUrl: string;
   /** Include timestamp in message (default: false) */
   includeTimestamp?: boolean;
+  /** Message thread ID for organizing logs into forum threads */
+  messageThreadId?: number;
+}
+
+interface ISendToTelegramPayload {
+  chat_id: string;
+  text: string;
+  parse_mode: string;
+  message_thread_id?: number;
 }
 
 /**
@@ -50,18 +59,22 @@ export interface ISendToTelegramOptions {
  * @public
  */
 export async function sendToTelegram(options: ISendToTelegramOptions): Promise<void> {
-  const { log, botToken, chatId, parseMode, apiUrl, includeTimestamp } = options;
+  const { log, botToken, chatId, parseMode, apiUrl, includeTimestamp, messageThreadId } = options;
   const message = formatMessage(log, { includeTimestamp });
   const url = `${apiUrl}/bot${botToken}/sendMessage`;
   
-  const payload = {
+  const payload: ISendToTelegramPayload = {
     chat_id: chatId,
     text: message,
     parse_mode: parseMode
   };
 
+  // Add message_thread_id if provided
+  if (messageThreadId !== undefined) {
+    payload.message_thread_id = messageThreadId;
+  }
+
   try {
-    // Use Node.js built-in fetch (available since Node.js 18.0.0)
     const response = await fetch(url, {
       method: 'POST',
       headers: {

@@ -1,3 +1,5 @@
+import { ThreadIdMapping } from '../constants/THREAD_IDS';
+
 /**
  * Log level names supported by the transport
  * @public
@@ -38,4 +40,7 @@ export interface ITelegramTransportOptions {
   
   /** Telegram API base URL (default: 'https://api.telegram.org') */
   readonly apiUrl?: string;
+  
+  /** Message thread IDs for each log level to organize logs into separate forum threads */
+  readonly threadIds?: ThreadIdMapping;
 }
